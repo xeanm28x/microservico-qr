@@ -16,13 +16,11 @@ def gerar_qr_code():
     if not data or 'valor' not in data or 'id_livro' not in data:
         return jsonify({'message': 'Dados inválidos. Valor e livro são obrigatórios.'}), 400
 
-    valor = data['valor']
-    id_livro = data['id_livro']
-
-    pix_payload = f"00020126440014BR.GOV.BCB.PIX0136+556199999999220820000014520400005303986540{valor:.2f}5802BR5913Nome Recebedor6008Brasilia62280515ID12345678901234-1" + str(id_livro)
+    # Em vez do pix_payload, vamos gerar o QR Code com o link para a tela de confirmação
+    url_confirmacao = "https://ava.ufms.br/"  # URL completa para a confirmação
 
     qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4)
-    qr.add_data(pix_payload)
+    qr.add_data(url_confirmacao)
     qr.make(fit=True)
 
     img = qr.make_image(fill='black', back_color='white')
