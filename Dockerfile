@@ -1,29 +1,22 @@
-# Usar a imagem base do Python
-FROM python:3.11-slim
+# microservico_qr/Dockerfile
 
-# Definir o diretório de trabalho
+# Use uma imagem base do Python 3.9
+FROM python:3.9-slim
+
+# Defina o diretório de trabalho no contêiner
 WORKDIR /app
 
-# Copiar o arquivo de dependências
+# Copie os arquivos de requirements para o contêiner
 COPY requirements.txt .
 
-# Instalar as dependências
+# Instale as dependências do Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar o restante do código
+# Copie o código da aplicação para o contêiner
 COPY . .
 
-# Adicionar variáveis de ambiente para o Flask
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-ENV FLASK_RUN_PORT=5000
-
-# Expor a porta 5000
+# Exponha a porta em que o Flask irá rodar (5000)
 EXPOSE 5000
 
-# Criar um usuário não-root (boa prática para segurança)
-RUN adduser --disabled-password --gecos '' appuser && chown -R appuser /app
-USER appuser
-
-# Comando para rodar a aplicação
-CMD ["python", "-m", "flask", "run"]
+# Comando para iniciar a aplicação Flask
+CMD ["python", "app.py"]
