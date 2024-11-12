@@ -49,7 +49,7 @@ def processar_mensagem(ch, method, properties, body):
 
 # Configurar o consumidor RabbitMQ
 def iniciar_consumidor():
-    conexao = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    conexao = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
     canal = conexao.channel()
 
     # Declarar a fila caso ainda não exista
